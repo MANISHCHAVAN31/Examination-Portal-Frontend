@@ -11,9 +11,14 @@ const DisplayQuestion = () => {
   const Navigate = useNavigate();
   const currentUser = useParams().username;
 
+  const [pageNo, setPageNo] = useState(1);
+  const [noOfQuestions, setNoOfQuestions] = useState(2);
+
   const loadQuestionData = async () => {
     const resp = await axios
-      .get("http://localhost:9000/getallquestions")
+      .get(
+        `http://localhost:9000/getallquestions?pageno=${pageNo}&&noofquestions=${noOfQuestions}`
+      )
       .catch((error) => {
         console.log(error);
         return;
@@ -45,16 +50,142 @@ const DisplayQuestion = () => {
   useEffect(() => {
     checkoutUser();
     loadQuestionData();
-  }, []);
+  }, [noOfQuestions, pageNo]);
 
   return (
     <div>
       <Navbar />
       <div className="container-fluid text-center">
         <h2 className="pt-4 pb-1">All Questions</h2>
-        <div className="scrollme">
-          {/* pagingation */}
 
+        {/* dropdown */}
+        <div className="row">
+          <div className="col mx-auto">
+            {" "}
+            <div className="dropdown">
+              <button
+                className="btn btn-dark dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                No of Users: {noOfQuestions === 100 ? "ALL" : noOfQuestions}{" "}
+              </button>
+              <ul
+                className="dropdown-menu"
+                aria-labelledby="dropdownMenuButton1"
+              >
+                <li>
+                  <a
+                    className="dropdown-item"
+                    onClick={() => {
+                      setNoOfQuestions(2);
+                    }}
+                  >
+                    2
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="dropdown-item"
+                    onClick={() => {
+                      setNoOfQuestions(4);
+                    }}
+                  >
+                    4
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="dropdown-item"
+                    onClick={() => {
+                      setNoOfQuestions(6);
+                    }}
+                  >
+                    6
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="dropdown-item"
+                    onClick={() => {
+                      setNoOfQuestions(100);
+                    }}
+                  >
+                    All
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="col mx-auto">
+            {/* pagingation */}
+            <nav aria-label="Page navigation example ">
+              <ul className="pagination justify-content-end">
+                <li className="page-item">
+                  <a
+                    className="page-link"
+                    href="#"
+                    tabIndex="-1"
+                    aria-disabled="true"
+                    onClick={() => {
+                      setPageNo(pageNo - 1);
+                    }}
+                  >
+                    Previous
+                  </a>
+                </li>
+                <li className="page-item">
+                  <a
+                    className="page-link"
+                    href="#"
+                    onClick={() => {
+                      setPageNo(1);
+                    }}
+                  >
+                    1
+                  </a>
+                </li>
+                <li className="page-item">
+                  <a
+                    className="page-link"
+                    href="#"
+                    onClick={() => {
+                      setPageNo(2);
+                    }}
+                  >
+                    2
+                  </a>
+                </li>
+                <li className="page-item">
+                  <a
+                    className="page-link"
+                    href="#"
+                    onClick={() => {
+                      setPageNo(3);
+                    }}
+                  >
+                    3
+                  </a>
+                </li>
+                <li className="page-item">
+                  <a
+                    className="page-link"
+                    href="#"
+                    onClick={() => {
+                      setPageNo(pageNo + 1);
+                    }}
+                  >
+                    Next
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+
+        <div className="scrollme">
           {/* excel button */}
           <ReactHTMLTableToExcel
             id="test-table-xls-button"
