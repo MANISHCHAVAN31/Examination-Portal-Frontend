@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Navbar from "../components/Navbar";
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
 
 const TestDetail = () => {
   const currentUser = useParams().username;
@@ -53,6 +55,7 @@ const TestDetail = () => {
 
   return (
     <div>
+      <Navbar />
       <div className="container bg-white mt-3">
         <h1 className="display-6 fw-bold py-3 text-center">Report of a Test</h1>
         <div>
@@ -62,11 +65,23 @@ const TestDetail = () => {
           <p>Your Score: {testDetail.score}</p>
         </div>
         <div>
-          <table className="table table-bordered border-dark">
+          {/* excel button */}
+          <ReactHTMLTableToExcel
+            id="test-table-xls-button"
+            className="download-table-xls-button btn btn-success btn-sm mb-2"
+            table="table-to-xls"
+            filename="tablexls"
+            sheet="tablexls"
+            buttonText="Download User Tests"
+          />
+          <table className="table table-bordered border-dark" id="table-to-xls">
             <thead>
               <tr>
                 <th>Detail</th>
-                <th>Options</th>
+                <th>Option 1</th>
+                <th>Option 2</th>
+                <th>Option 3</th>
+                <th>Option 4</th>
                 <th>Attempted</th>
                 <th>Selected Option</th>
                 <th>Correct Option</th>
@@ -78,7 +93,10 @@ const TestDetail = () => {
               {Object.values(questions).map((data) => (
                 <tr key={data.id}>
                   <td>{data.detail}</td>
-                  <td>{data.options}</td>
+                  <td>{data.options[0]}</td>
+                  <td>{data.options[1]}</td>
+                  <td>{data.options[2]}</td>
+                  <td>{data.options[3]}</td>
                   <td>{data.isattempted ? "true" : "false"}</td>
                   <td>{data.selectedoption}</td>
                   <td>{data.correctoption}</td>

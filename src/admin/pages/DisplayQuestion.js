@@ -61,7 +61,6 @@ const DisplayQuestion = () => {
         {/* dropdown */}
         <div className="row">
           <div className="col mx-auto">
-            {" "}
             <div className="dropdown">
               <button
                 className="btn btn-dark dropdown-toggle"
@@ -209,6 +208,7 @@ const DisplayQuestion = () => {
                 <th>Option 4</th>
                 <th>Correct Option</th>
                 <th>Out of Score</th>
+                <th>Complexity</th>
                 <th>Explore</th>
               </tr>
             </thead>
@@ -222,6 +222,7 @@ const DisplayQuestion = () => {
                   <td>{data.options[3]}</td>
                   <td>{data.correctoption}</td>
                   <td>{data.outofscore}</td>
+                  <td>{data.complexity}</td>
                   <td>
                     <button
                       className="btn btn-sm btn-secondary"
