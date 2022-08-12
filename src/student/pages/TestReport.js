@@ -89,7 +89,7 @@ const TestReport = () => {
           </table>
           <div className="text-center">
             <button
-              className="btn btn-primary"
+              className="btn btn-primary mb-3"
               onClick={() => {
                 Navigate(`/studentdashboard/${currentUser}`);
               }}

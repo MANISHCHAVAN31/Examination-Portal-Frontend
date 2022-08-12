@@ -6,6 +6,9 @@ import StudentNavbar from "../components/StudentNavbar";
 const DisplayTest = () => {
   const currentUser = useParams().username;
   const [testData, setTestData] = useState({});
+  const [score, setScore] = useState(0);
+  const [totalScore, setTotalScore] = useState(0);
+
   const Navigate = useNavigate();
 
   const loadTestData = async () => {
@@ -21,6 +24,20 @@ const DisplayTest = () => {
     if (resp) {
       console.log(resp.data);
       setTestData(resp.data);
+
+      // countof score
+      let score = 0;
+      for (let i in resp.data) {
+        score += resp.data[i].score;
+      }
+      setScore(score);
+
+      let outOfScore = 0;
+      for (let i in resp.data) {
+        outOfScore += resp.data[i].outofscore;
+      }
+      setTotalScore(outOfScore);
+
       return;
     }
   };
@@ -82,6 +99,13 @@ const DisplayTest = () => {
                 </td>
               </tr>
             ))}
+            <tr className="bg-secondary text-white fw-bold">
+              <td className="">TOTAL SCORE</td>
+              <td></td>
+              <td>{score}</td>
+              <td>{totalScore}</td>
+              <td></td>
+            </tr>
           </tbody>
         </table>
       </div>

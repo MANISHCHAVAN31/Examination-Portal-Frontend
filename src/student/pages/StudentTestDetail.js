@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
 
 const StudentTestDetail = () => {
   const currentUser = useParams().username;
@@ -61,11 +62,24 @@ const StudentTestDetail = () => {
           <p>Your Score: {testDetail.score}</p>
         </div>
         <div>
-          <table className="table table-bordered border-dark">
+          {/* excel button */}
+          <ReactHTMLTableToExcel
+            id="test-table-xls-button"
+            className="download-table-xls-button btn btn-success btn-sm mb-2"
+            table="table-to-xls"
+            filename="tablexls"
+            sheet="tablexls"
+            buttonText="Download Questions"
+          />
+
+          <table className="table table-bordered border-dark" id="table-to-xls">
             <thead>
               <tr>
                 <th>Detail</th>
-                <th>Options</th>
+                <th>Option 1</th>
+                <th>Option 2</th>
+                <th>Option 3</th>
+                <th>Option 4</th>
                 <th>Attempted</th>
                 <th>Selected Option</th>
                 <th>Correct Option</th>
@@ -77,12 +91,12 @@ const StudentTestDetail = () => {
               {Object.values(questions).map((data) => (
                 <tr key={data.id}>
                   <td>{data.detail}</td>
-                  <td>
-                    <p>{data.options[0]}</p>
-                    <p>{data.options[1]}</p>
-                    <p>{data.options[2]}</p>
-                    <p>{data.options[3]}</p>
-                  </td>
+
+                  <td>{data.options[0]}</td>
+                  <td>{data.options[1]}</td>
+                  <td>{data.options[2]}</td>
+                  <td>{data.options[3]}</td>
+
                   <td>{data.isattempted ? "true" : "false"}</td>
                   <td>{data.selectedoption}</td>
                   <td>{data.correctoption}</td>

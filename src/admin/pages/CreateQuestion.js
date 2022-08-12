@@ -38,8 +38,7 @@ const CreateQuestion = () => {
     selectedoptions.push(option2);
     selectedoptions.push(option3);
     selectedoptions.push(option4);
-
-    console.log(selectedoptions);
+    setOutOfScore(complexity + 1);
 
     const resp = await axios
       .post("http://localhost:9000/createquestion", {
@@ -80,8 +79,26 @@ const CreateQuestion = () => {
     }
   };
 
+  const [complexityData, setComplexityData] = useState([]);
+
+  const loadComplexityData = async () => {
+    let resp = await axios
+      .get(`http://localhost:9000/getcomplexity?username=${currentUser}`)
+      .catch((error) => {
+        console.log(error);
+        return;
+      });
+
+    if (resp) {
+      console.log(resp.data);
+      setComplexityData(resp.data);
+      return;
+    }
+  };
+
   useEffect(() => {
     checkoutUser();
+    loadComplexityData();
     loadTechnlogies();
   }, []);
 
@@ -134,6 +151,16 @@ const CreateQuestion = () => {
             <div className="row">
               <div className="col">
                 <input
+                  className="form-check-input"
+                  type="radio"
+                  name="correctOption"
+                  id="correctOption"
+                  value={correctOption}
+                  onChange={(e) => {
+                    setCorrectOption(option1);
+                  }}
+                />
+                <input
                   type="text"
                   placeholder="option1"
                   className="form-control"
@@ -142,6 +169,16 @@ const CreateQuestion = () => {
                 />
               </div>
               <div className="col">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="correctOption"
+                  id="correctOption"
+                  value={correctOption}
+                  onChange={(e) => {
+                    setCorrectOption(option2);
+                  }}
+                />
                 <input
                   type="text"
                   placeholder="option2"
@@ -152,6 +189,16 @@ const CreateQuestion = () => {
               </div>
               <div className="col">
                 <input
+                  className="form-check-input"
+                  type="radio"
+                  name="correctOption"
+                  id="correctOption"
+                  value={correctOption}
+                  onChange={(e) => {
+                    setCorrectOption(option3);
+                  }}
+                />
+                <input
                   type="text"
                   placeholder="option3"
                   className="form-control"
@@ -160,6 +207,16 @@ const CreateQuestion = () => {
                 />
               </div>
               <div className="col">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="correctOption"
+                  id="correctOption"
+                  value={correctOption}
+                  onChange={(e) => {
+                    setCorrectOption(option4);
+                  }}
+                />
                 <input
                   type="text"
                   placeholder="option4"
@@ -171,7 +228,7 @@ const CreateQuestion = () => {
             </div>
           </div>
 
-          <div className="pb-2 col-8 mx-auto">
+          {/* <div className="pb-2 col-8 mx-auto">
             <label htmlFor="correctOption" className="form-label">
               Correct Option
             </label>
@@ -181,11 +238,11 @@ const CreateQuestion = () => {
               value={correctOption}
               onChange={(e) => setCorrectOption(e.target.value)}
             />
-          </div>
+          </div> */}
 
           <div className="pb-2 col-8 mx-auto">
             <div className="row">
-              <div className="col">
+              {/* <div className="col">
                 <label className="form-label" htmlFor="outOfScore">
                   Out Of Score
                 </label>
@@ -195,17 +252,32 @@ const CreateQuestion = () => {
                   value={outOfScore}
                   onChange={(e) => setOutOfScore(e.target.value)}
                 />
-              </div>
+              </div> */}
               <div className="col">
                 <label className="form-label" htmlFor="complexity">
                   Complexity
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={complexity}
-                  onChange={(e) => setComplexity(e.target.value)}
-                />
+
+                <div className="pb-2 mx-auto">
+                  <select
+                    name="complexity"
+                    id=""
+                    className="form-select"
+                    value={complexity}
+                    onChange={(e) => {
+                      setComplexity(e.target.value);
+                    }}
+                  >
+                    <option value="" disabled>
+                      ...
+                    </option>
+                    {Object.values(complexityData).map((data) => (
+                      <option value={data} key={data}>
+                        {data}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
           </div>

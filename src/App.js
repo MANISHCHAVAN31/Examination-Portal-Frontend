@@ -4,6 +4,7 @@ import "./App.css";
 // react toastify
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "react-circular-progressbar/dist/styles.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AdminDashboard from "./admin/pages/AdminDashboard";
